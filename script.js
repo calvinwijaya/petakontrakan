@@ -91,7 +91,7 @@ function initMap() {
     loadGeoJson('./data/desa.geojson', adminLayers.desa);
     loadGeoJson('./data/kecamatan.geojson', adminLayers.kecamatan);
     loadGeoJson('./data/kabupaten.geojson', adminLayers.kabupaten);
-    
+
     setupEventListeners();
     fetchData();
 }
@@ -136,13 +136,39 @@ function renderMarkers() {
     });
 }
 
+// Fungsi untuk membersihkan dan memformat nomor ke format wa.me
+function formatWhatsAppNumber(nomor) {
+    if (!nomor) return null;
+    
+    // Hapus semua karakter yang BUKAN angka (seperti spasi, huruf, tanda kutip, dll)
+    let cleaned = nomor.toString().replace(/\D/g, '');
+    
+    // Jika nomor diawali dengan angka 0, ganti dengan 62
+    if (cleaned.startsWith('0')) {
+        cleaned = '62' + cleaned.substring(1);
+    }
+    
+    // Pastikan nomor memiliki panjang yang wajar untuk nomor HP (minimal 10 digit)
+    if (cleaned.length >= 10) {
+        return cleaned;
+    }
+    
+    return null; // Kembalikan null jika nomor tidak valid
+}
+
 function showDetail(item, jarak) {
+    const waNumber = formatWhatsAppNumber(item.Kontak);
+    const waButtonHTML = waNumber 
+        ? `<a href="https://wa.me/${waNumber}" target="_blank" class="btn btn-success btn-sm w-100 mt-3 mb-2"><i class="fab fa-whatsapp me-1"></i>Hubungi via WhatsApp</a>` 
+        : `<div class="alert alert-warning p-1 mt-3 mb-2 text-center small">Nomor kontak tidak tersedia/tidak valid</div>`;
+
     Swal.fire({
         title: item.Lokasi,
         html: `
             <div class="text-start small">
                 <p><strong>Harga:</strong> ${item.Harga} | <strong>Jarak:</strong> ${jarak.toFixed(2)} km</p>
                 <p><strong>Spek:</strong><br>${item.Spesifikasi.replace(/\n/g, '<br>')}</p>
+                ${waButtonHTML}
                 <hr>
                 <label class="fw-bold">Update Status:</label>
                 <select id="update-status" class="form-select form-select-sm mt-1">
