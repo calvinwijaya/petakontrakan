@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Peta Kontrakan Jogja</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:,">
+</head>
+<body>
+
+    <button id="sidebarToggle" class="btn btn-primary shadow">
+        <i class="fas fa-filter"></i>
+    </button>
+
+    <div class="d-flex h-100">
+        <div id="sidebar" class="bg-white border-end shadow-sm active">
+            <div class="sidebar-header p-3 border-bottom bg-light d-flex align-items-center">
+                <div class="ms-5"> 
+                    <h5 class="fw-bold text-primary mb-0">Peta Kontrakan</h5>
+                </div>
+            </div>
+            
+            <div class="p-4 overflow-auto" style="height: calc(100vh - 65px);">
+                <div class="mb-4">
+                    <label class="form-label small fw-bold"><i class="fas fa-tags me-1"></i>Status</label>
+                    <select id="filter-status" class="form-select shadow-sm">
+                        <option value="Semua">Semua Status</option>
+                        <option value="Belum dikontak">Belum dikontak</option>
+                        <option value="Sudah kontak (available)">Sudah kontak (available)</option>
+                        <option value="Sudah kontak (belum available)">Sudah kontak (belum available)</option>
+                        <option value="Cek lokasi">Cek lokasi</option>
+                        <option value="Cek lokasi (kurang)">Cek lokasi (kurang)</option>
+                        <option value="Cek lokasi (recommended)">Cek lokasi (recommended)</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label small fw-bold"><i class="fas fa-money-bill-wave me-1"></i>Harga Maksimal</label>
+                    <input type="range" class="form-range" min="0" max="100" id="filter-harga" value="100">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="small text-muted">0 jt</span>
+                        <span id="harga-val" class="badge bg-primary">100 jt</span>
+                    </div>
+                    <div class="btn-group w-100 shadow-sm" role="group">
+                        <button type="button" class="btn btn-outline-primary btn-sm btn-quick-price" data-value="10">10jt</button>
+                        <button type="button" class="btn btn-outline-primary btn-sm btn-quick-price" data-value="15">15jt</button>
+                        <button type="button" class="btn btn-outline-primary btn-sm btn-quick-price" data-value="20">20jt</button>
+                        <button type="button" class="btn btn-outline-primary btn-sm btn-quick-price" data-value="100">Reset</button>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label small fw-bold"><i class="fas fa-route me-1"></i>Radius dari Kantor</label>
+                    <select id="filter-jarak" class="form-select shadow-sm">
+                        <option value="999">Semua Jarak</option>
+                        <option value="5">Maks 5 km</option>
+                        <option value="10">Maks 10 km</option>
+                        <option value="15">Maks 15 km</option>
+                        <option value="20">Maks 20 km</option>
+                        <option value="25">Maks 25 km</option>
+                    </select>
+                </div>
+
+                <div class="mb-4 border-top pt-3">
+                    <label class="form-label small fw-bold"><i class="fas fa-layer-group me-1"></i>Transparansi Basemap</label>
+                    <input type="range" class="form-range" min="0" max="1" step="0.1" id="basemap-opacity" value="1">
+                </div>
+            </div>
+        </div>
+
+        <div id="map-container" class="flex-grow-1 position-relative">
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="script.js"></script>
+</body>
+</html>
