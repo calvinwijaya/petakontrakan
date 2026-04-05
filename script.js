@@ -87,11 +87,11 @@ function initMap() {
     });
 
     // Pemuatan data GeoJSON
-    loadGeoJson('/data/jalan.geojson', adminLayers.jalan);
-    loadGeoJson('/data/desa.geojson', adminLayers.desa);
-    loadGeoJson('/data/kecamatan.geojson', adminLayers.kecamatan);
-    loadGeoJson('/data/kabupaten.geojson', adminLayers.kabupaten);
-
+    loadGeoJson('./data/jalan.geojson', adminLayers.jalan);
+    loadGeoJson('./data/desa.geojson', adminLayers.desa);
+    loadGeoJson('./data/kecamatan.geojson', adminLayers.kecamatan);
+    loadGeoJson('./data/kabupaten.geojson', adminLayers.kabupaten);
+    
     setupEventListeners();
     fetchData();
 }
